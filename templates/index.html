@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Your Chemistry Friend</title>
+    <style>
+        .input-group {
+            display: inline-block;
+            margin-right: 10px;
+        }
+        
+        .result p {
+            font-size: 1.2em;
+        }
+        
+        #suggestions {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            border: 1px solid #ccc;
+            background-color: #fff;
+            position: absolute;
+            z-index: 1000;
+            width: 200px;
+            display: none;
+        }
+        
+        #suggestions li {
+            padding: 10px;
+            cursor: pointer;
+        }
+        
+        #suggestions li:hover {
+            background-color: #f0f0f0;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+    <header>
+        <a href="#" class="logo">Your Chemistry Friend</a>
+    </header>
+    <section class="home1">
+        <div class="home2">
+            <h1>Acid <span>Base</span> Calculator</h1>
+            <form id="calculate-form" class="container">
+                <div class="sup-container">
+                    <!-- Autocomplete-enabled input for compound name -->
+                    <div class="input-group">
+                        <label for="value1">Name</label>
+                        <input type="text" id="value1" name="value1" autocomplete="off" required>
+                        <ul id="suggestions"></ul>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="value2">Concentration (M)</label>
+                        <input type="number" id="value2" name="value2" step="0.0001" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="value3">Volume (L)</label>
+                        <input type="number" id="value3" name="value3" step="0.01" required>
+                    </div>
+                </div>
+
+                <br><br>
+                <div class="btn">
+                    <button class="sm" type="submit">Submit</button>
+                </div>
+            </form>
+            <div class="result" id="result">
+                <!-- Results will appear here -->
+            </div>
+        </div>
+    </section>
+
+    <script>
+        $(document).ready(function() {
+            // Autocomplete functionality
+            const input = $("#value1");
+            const suggestionBox = $("#suggestions");
+
+            input.on("input", function() {
+                const query = input.val();
+                if (!query) {
+                    suggestionBox.hide();
+                    return;
+                }
+
+                // Fetch suggestions from the backend
+                $.getJSON(`/autocomplete?q=${query}`, function(data) {
+                    suggestionBox.empty();
+                    if (data.length > 0) {
+                        suggestionBox.show();
+                        data.forEach(function(item) {
+                            const li = $("<li>").text(item).on("click", function() {
+                                input.val(item);
+                                suggestionBox.hide();
+                            });
+                            suggestionBox.append(li);
+                        });
+                    } else {
+                        suggestionBox.hide();
+                    }
+                });
+            });
+
+            // Hide suggestions when clicking outside
+            $(document).on("click", function(e) {
+                if (!$(e.target).closest("#value1, #suggestions").length) {
+                    suggestionBox.hide();
+                }
+            });
+
+            // Handle form submission for calculations
+            $("#calculate-form").on("submit", function(e) {
+                e.preventDefault();
+
+                const compound = $("#value1").val();
+                const concentration = $("#value2").val();
+                const volume = $("#value3").val();
+
+                $.ajax({
+                    url: "/calculate",
+                    type: "POST",
+                    contentType: "application/json",
+                    data: JSON.stringify({
+                        compound,
+                        concentration,
+                        volume,
+                    }),
+                    success: function(response) {
+                        $("#result").html(
+                            `<p><strong>pH:</strong> ${response.pH}</p>
+                             <p><strong>pOH:</strong> ${response.pOH}</p>`
+                        );
+                    },
+                    error: function(xhr) {
+                        const error = xhr.responseJSON.error || "An error occurred";
+                        $("#result").html(`<p style="color: red;">${error}</p>`);
+                    },
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
