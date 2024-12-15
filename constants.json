@@ -21,7 +21,6 @@
     "weak_acids": {
         "acetic acid": 1.8e-5,
         "formic acid": 1.77e-4,
-        "carbonic acid": 4.3e-7,
         "lactic acid": 1.4e-4,
         "benzoic acid": 6.3e-5,
         "salicylic acid": 1.1e-3,
@@ -31,10 +30,27 @@
         "glycolic acid": 1.4e-4,
         "pyruvic acid": 1.6e-5,
         "hydrocyanic acid": 6.2e-10,
-        "hypophosphorous acid": 1.4e-4,
         "malic acid": 1.0e-4,
         "acrylic acid": 3.5e-5,
         "glutaric acid": 3.8e-5
+    },
+    "weak_bases": {
+        "ammonia": 1.8e-5,
+        "methylamine": 4.4e-4,
+        "aniline": 4.3e-10,
+        "triethanolamine": 6.3e-6,
+        "dimethylamine": 5.4e-4,
+        "trimethylamine": 7.4e-4,
+        "ethylamine": 5.6e-4,
+        "sodium bicarbonate": 5.6e-11,
+        "sodium carbonate": 2.1e-4,
+        "calcium carbonate": 2.1e-4,
+        "magnesium carbonate": 2.1e-4,
+        "potassium carbonate": 2.1e-4,
+        "sodium formate": 1.8e-9,
+        "potassium formate": 1.8e-9,
+        "lysine": 1.8e-10,
+        "arginine": 1.2e-12
     },
     "polyprotic_acids": {
         "phosphoric acid": {
@@ -43,81 +59,34 @@
             "Ka3": 4.8e-13
         },
         "carbonic acid": {
-            "step_1": 4.3e-7,
-            "step_2": 5.6e-11
+            "Ka1": 4.3e-7,
+            "Ka2": 5.6e-11
         },
         "citric acid": {
-            "step_1": 7.4e-6,
-            "step_2": 1.7e-8,
-            "step_3": 4.0e-12
+            "Ka1": 7.4e-6,
+            "Ka2": 1.7e-8,
+            "Ka3": 4.0e-12
         },
         "tartaric acid": {
-            "step_1": 9.2e-4,
-            "step_2": 4.3e-5
+            "Ka1": 9.2e-4,
+            "Ka2": 4.3e-5
         },
         "oxalic acid": {
-            "step_1": 5.4e-2,
-            "step_2": 5.4e-6
+            "Ka1": 5.4e-2,
+            "Ka2": 5.4e-6
         },
         "maleic acid": {
-            "step_1": 1.2e-2,
-            "step_2": 5.4e-7
+            "Ka1": 1.2e-2,
+            "Ka2": 5.4e-7
         },
         "succinic acid": {
-            "step_1": 1.6e-5,
-            "step_2": 1.0e-7
-        },
-        "uric acid": {
-            "step_1": 1.0e-5,
-            "step_2": 6.3e-11
-        },
-        "chromic acid": {
-            "Ka1": 9.6,
-            "Ka2": 3.2e-7
-        },
-        "sulfurous acid": {
-            "Ka1": 1.7e-2,
-            "Ka2": 6.4e-8
+            "Ka1": 1.6e-5,
+            "Ka2": 1.0e-7
         },
         "glycine": {
             "Ka1": 4.5e-3,
             "Ka2": 2.5e-10
-        },
-        "hydrogen sulfide": {
-            "Ka1": 1.0e-7,
-            "Ka2": 1.3e-13
         }
-
-    },
-    "weak_bases": {
-        "ammonia": 1.8e-5,
-        "methylamine": 4.4e-4,
-        "aniline": 4.3e-10,
-        "magnesium hydroxide": 5.6e-12,
-        "aluminum hydroxide": 5.0e-6,
-        "triethanolamine": 6.3e-6,
-        "sodium bicarbonate": 5.6e-11,
-        "dimethylamine": 5.4e-4,
-        "trimethylamine": 7.4e-4,
-        "sodium carbonate": 2.1e-4,
-        "calcium carbonate": 2.1e-4,
-        "magnesium carbonate": 2.1e-4,
-        "potassium carbonate": 2.1e-4,
-        "ethylamine": 5.6e-4,
-        "ammonium hydroxide": 5.6e-10,
-        "sodium phosphate": 1.0e-3,
-        "potassium phosphate": 1.0e-3,
-        "dihydrogen phosphate": 1.2e-7,
-        "monoethanolamine": 2.5e-3,
-        "diethanolamine": 2.5e-5,
-        "sodium formate": 1.8e-9,
-        "potassium formate": 1.8e-9,
-        "diethylamine": 8.0e-4,
-        "lysine": 1.8e-10,
-        "arginine": 1.2e-12,
-        "hydroxylamine": 1.0e-6,
-        "glycine": 9.6e-3,
-        "sulfate ion": 8.33e-13
     },
     "polyprotic_bases": {
         "phosphate ion": {
