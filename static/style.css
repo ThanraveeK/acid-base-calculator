@@ -29,7 +29,6 @@ header {
     width: 100%;
     padding: 1rem 9%;
     background-color: transparent;
-    filter: drop-shadow(10px);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -46,51 +45,6 @@ header {
 
 .logo:hover {
     transform: scale(1.1);
-}
-
-nav a {
-    font-size: 1.8rem;
-    color: white;
-    margin-left: 4rem;
-    font-weight: 500;
-    transition: 0.3s ease;
-    border-bottom: 3px solid transparent;
-}
-
-nav a:hover,
-nav a.active {
-    color: #624bb7;
-    border-bottom: 3px solid #624bb7;
-}
-
-@media (max-width: 995px) {
-    nav {
-        position: absolute;
-        display: none;
-        top: 0;
-        right: 0;
-        width: 40%;
-        border-left: 3px solid #624bb7;
-        border-bottom: 3px solid #624bb7;
-        border-bottom-left-radius: 2rem;
-        padding: 1rem solid;
-        background-color: #161616;
-        border-top: 0.1rem solid rgba(0, 0, 0, 0.1);
-    }
-    nav.active {
-        display: block;
-    }
-    nav a {
-        display: block;
-        font-size: 2rem;
-        margin: 3rem 0;
-    }
-    nav a:hover,
-    nav a.active {
-        padding: 1rem;
-        border-radius: 0.5rem;
-        border-bottom: 0.5rem solid #624bb7;
-    }
 }
 
 section {
@@ -116,75 +70,12 @@ span {
     color: #624bb7;
 }
 
-.home2 h3 {
-    font-size: 4rem;
-    margin-bottom: 1rem;
-    font-weight: 700;
-}
-
-.home2 p {
-    font-size: 1.6rem;
-}
-
-.home-img {
-    border-radius: 50%;
-}
-
-.home-img img {
-    position: relative;
-    width: 32vw;
-    border-radius: 50%;
-    box-shadow: 0 0 25px solid #624bb7;
-    cursor: pointer;
-    transition: 0.2s linear;
-}
-
-.home-img img:hover {
-    font-size: 1.8rem;
-    font-weight: 500;
-}
-
-.sm {
-    display: inline-block;
-    padding: 1rem 2.8rem;
-    background-color: black;
-    border-radius: 4rem;
-    font-size: 1.6rem;
-    color: #624bb7;
-    letter-spacing: 0.3rem;
-    font-weight: 600;
-    border: 2px solid #624bb7;
-    transition: 0.3s ease;
-    cursor: pointer;
-}
-
-.sm:hover {
-    transform: scale3d(1.03);
-    background-color: #624bb7;
-    color: black;
-    box-shadow: 0 0 25px #624bb7;
-}
-
-.typing-text span::before {
-    content: "software Developer";
-    color: #624bb7;
-    animation: words 20s infinite;
-}
-
-@keyframes cursor {
-    to {
-        border-left: 3px solid #624bb7;
-    }
-}
-
 .sup-container {
     display: flex;
-}
-
-.conternai {
-    display: flex;
-    justify-content: center;
+    flex-direction: column;
+    gap: 2rem;
     align-items: center;
+    justify-content: center;
 }
 
 .input-group {
@@ -193,18 +84,12 @@ span {
     flex-direction: column;
     border-radius: 60px;
     margin-bottom: 2rem;
-    /* Adjust margin to create space between inputs */
 }
 
 input[type='text'],
 input[type='number'],
 button {
-    -webkit-appearance: none;
-    /* For WebKit browsers (Chrome, Safari) */
-    -moz-appearance: none;
-    /* For Firefox */
     appearance: none;
-    /* For modern browsers */
 }
 
 input[type='text'] {
@@ -233,13 +118,8 @@ input[type='number']:focus {
 
 input[type='number']::-webkit-outer-spin-button,
 input[type='number']::-webkit-inner-spin-button {
-    -webkit-appearance: none;
+    appearance: none;
     margin: 0;
-}
-
-.btn {
-    display: flex;
-    justify-content: center;
 }
 
 .result {
@@ -247,6 +127,8 @@ input[type='number']::-webkit-inner-spin-button {
     text-align: center;
     margin-top: 5%;
     font-weight: bold;
+    color: #4CAF50;
+    /* Green for results */
 }
 
 .input-group input[type="text"],
@@ -288,4 +170,92 @@ input[type="text"]:focus,
 input[type="number"]:focus {
     outline: none;
     border: 2px solid #624bb7;
+}
+
+
+/* Toggle Switch Styles */
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #624bb7;
+    transition: 0.4s;
+    border-radius: 34px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 12px;
+    width: 12px;
+    border-radius: 50%;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: 0.4s;
+}
+
+input:checked+.slider {
+    background-color: #4CAF50;
+}
+
+input:checked+.slider:before {
+    transform: translateX(26px);
+}
+
+.switch-label {
+    margin-left: 10px;
+    font-size: 14px;
+}
+
+.calculation-mode {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.calculation-mode label {
+    font-size: 1.6rem;
+    color: #fff;
+    margin-left: 1rem;
+}
+
+
+/* Dynamic Field Visibility (without checkboxes) */
+
+#volume-group {
+    display: none;
+    /* Hide the volume input by default */
+}
+
+#concentration-group {
+    display: block;
+    /* Show the concentration input by default */
+}
+
+.switch input:checked~.sup-container #volume-group {
+    display: block;
+    /* Show the volume input when the toggle is on */
+}
+
+.switch input:checked~.sup-container #concentration-group {
+    display: none;
+    /* Hide concentration input when the toggle is on */
 }
