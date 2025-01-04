@@ -1,45 +1,218 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <title>Your Chemistry Friend</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600&display=swap');
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            text-decoration: none;
+            border: none;
+            outline: none;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        html {
+            font-size: 62.5%;
+        }
+
+        body {
+            width: 100%;
+            min-height: 100vh;
+            overflow-x: hidden;
+            background-color: black;
+            color: white;
+        }
+
+        header {
+            margin-top: 20px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 1rem 9%;
+            background-color: transparent;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 3rem;
+            color: #624bb7;
+            font-weight: 800;
+            cursor: pointer;
+            transition: 0.5s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.1);
+        }
+
+        section {
+            min-height: 100vh;
+            padding: 5rem 9% 5rem;
+        }
+
+        .home1 {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8rem;
+            background-color: black;
+        }
+
+        .home1 .home2 h1 {
+            font-size: 6rem;
+            font-weight: 700;
+            line-height: 1.3;
+        }
+
+        span {
+            color: #624bb7;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .sup-container {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            align-items: center;
+            justify-content: center;
+        }
+
         .input-group {
-            display: inline-block;
-            margin-right: 10px;
+            width: 100%;
+            max-width: 400px;
+            font-size: 15px;
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 2rem;
         }
-        
-        .result p {
-            font-size: 1.2em;
+
+        .input-group label {
+            color: white;
+            margin-bottom: 0.5rem;
+            font-size: 1.6rem;
         }
-        
+
+        input[type='text'],
+        input[type='number'] {
+            background: white;
+            border-radius: 10px;
+            padding: 10px;
+            width: 100%;
+            font-size: 1.6rem;
+            height: 50px;
+        }
+
+        input[type='text']:focus,
+        input[type='number']:focus {
+            outline: none;
+            border: 2px solid #624bb7;
+        }
+
+        button {
+            background-color: #624bb7;
+            color: white;
+            padding: 1.5rem 3rem;
+            border-radius: 10px;
+            font-size: 1.6rem;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background-color: #513a9d;
+        }
+
+        .result {
+            font-size: 2.4rem;
+            text-align: center;
+            margin-top: 5%;
+            font-weight: bold;
+            color: #4CAF50;
+        }
+
         #suggestions {
             list-style: none;
             padding: 0;
             margin: 0;
-            border: 1px solid #ccc;
-            background-color: #fff;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
             position: absolute;
+            width: 100%;
+            max-width: 400px;
             z-index: 1000;
-            width: 200px;
-            display: none;
         }
-        
+
         #suggestions li {
-            padding: 10px;
+            padding: 1rem;
             cursor: pointer;
+            color: black;
+            font-size: 1.4rem;
         }
-        
+
         #suggestions li:hover {
-            background-color: #f0f0f0;
+            background-color: #624bb7;
+            color: white;
+        }
+
+        .mode-selector {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .mode-selector label {
+            font-size: 1.6rem;
+            color: white;
+        }
+
+        select {
+            padding: 1rem;
+            border-radius: 5px;
+            font-size: 1.6rem;
+            background-color: white;
+        }
+
+        @media (max-width: 768px) {
+            html {
+                font-size: 55%;
+            }
+
+            .home1 .home2 h1 {
+                font-size: 4rem;
+            }
+
+            .container {
+                padding: 0 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            html {
+                font-size: 50%;
+            }
+
+            .home1 .home2 h1 {
+                font-size: 3rem;
+            }
         }
     </style>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
-
 <body>
     <header>
         <a href="#" class="logo">Your Chemistry Friend</a>
@@ -49,104 +222,158 @@
             <h1>Acid <span>Base</span> Calculator</h1>
             <form id="calculate-form" class="container">
                 <div class="sup-container">
-                    <!-- Autocomplete-enabled input for compound name -->
                     <div class="input-group">
-                        <label for="value1">Name</label>
-                        <input type="text" id="value1" name="value1" autocomplete="off" required>
+                        <label for="compound">Compound Name</label>
+                        <input type="text" id="compound" name="compound" autocomplete="off" required>
                         <ul id="suggestions"></ul>
                     </div>
 
-                    <div class="input-group">
-                        <label for="value2">Concentration (M)</label>
-                        <input type="number" id="value2" name="value2" step="0.0001" required>
+                    <div class="mode-selector">
+                        <label for="calculation-mode">Mode:</label>
+                        <select id="calculation-mode" name="calculation-mode">
+                            <option value="concentration">Concentration</option>
+                            <option value="moles-volume">Moles and Volume</option>
+                            <option value="mass-volume">Mass and Volume</option>
+                        </select>
                     </div>
 
-                    <div class="input-group">
-                        <label for="value3">Volume (L)</label>
-                        <input type="number" id="value3" name="value3" step="0.01" required>
+                    <div class="input-group" id="concentration-group">
+                        <label for="concentration">Concentration (M)</label>
+                        <input type="number" id="concentration" name="concentration" step="0.0001" required>
                     </div>
-                </div>
 
-                <br><br>
-                <div class="btn">
-                    <button class="sm" type="submit">Submit</button>
+                    <div class="input-group" id="moles-group" style="display: none;">
+                        <label for="moles">Moles (mol)</label>
+                        <input type="number" id="moles" name="moles" step="0.0001">
+                    </div>
+
+                    <div class="input-group" id="mass-group" style="display: none;">
+                        <label for="mass">Mass (g)</label>
+                        <input type="number" id="mass" name="mass" step="0.0001">
+                    </div>
+
+                    <div class="input-group" id="volume-group" style="display: none;">
+                        <label for="volume">Volume (L)</label>
+                        <input type="number" id="volume" name="volume" step="0.01">
+                    </div>
+
+                    <button type="submit">Calculate</button>
                 </div>
             </form>
-            <div class="result" id="result">
-                <!-- Results will appear here -->
+            <div class="result">
+                <p id="concentration-result"></p>
+                <p id="pH"></p>
+                <p id="pOH"></p>
+                <p id="error-message" style="color: red;"></p>
             </div>
         </div>
     </section>
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function() {
-            // Autocomplete functionality
-            const input = $("#value1");
-            const suggestionBox = $("#suggestions");
+            const calculationMode = $('#calculation-mode');
+            const concentrationGroup = $('#concentration-group');
+            const molesGroup = $('#moles-group');
+            const massGroup = $('#mass-group');
+            const volumeGroup = $('#volume-group');
 
-            input.on("input", function() {
-                const query = input.val();
-                if (!query) {
-                    suggestionBox.hide();
-                    return;
-                }
+            calculationMode.on('change', function() {
+                const mode = $(this).val();
+                
+                // Hide all groups first
+                concentrationGroup.hide();
+                molesGroup.hide();
+                massGroup.hide();
+                volumeGroup.hide();
 
-                // Fetch suggestions from the backend
-                $.getJSON(`/autocomplete?q=${query}`, function(data) {
-                    suggestionBox.empty();
-                    if (data.length > 0) {
-                        suggestionBox.show();
-                        data.forEach(function(item) {
-                            const li = $("<li>").text(item).on("click", function() {
-                                input.val(item);
-                                suggestionBox.hide();
-                            });
-                            suggestionBox.append(li);
-                        });
-                    } else {
-                        suggestionBox.hide();
-                    }
-                });
-            });
-
-            // Hide suggestions when clicking outside
-            $(document).on("click", function(e) {
-                if (!$(e.target).closest("#value1, #suggestions").length) {
-                    suggestionBox.hide();
+                // Show relevant groups based on mode
+                switch(mode) {
+                    case 'concentration':
+                        concentrationGroup.show();
+                        break;
+                    case 'moles-volume':
+                        molesGroup.show();
+                        volumeGroup.show();
+                        break;
+                    case 'mass-volume':
+                        massGroup.show();
+                        volumeGroup.show();
+                        break;
                 }
             });
 
-            // Handle form submission for calculations
-            $("#calculate-form").on("submit", function(e) {
+            // Compound name suggestions
+            $('#compound').on('input', function() {
+                const query = $(this).val().toLowerCase();
+                if (query) {
+                    $.get(`/autocomplete?q=${query}`, function(data) {
+                        if (data.length > 0) {
+                            const suggestions = data.map(item => `<li>${item}</li>`).join('');
+                            $('#suggestions').html(suggestions).show();
+                        } else {
+                            $('#suggestions').hide();
+                        }
+                    });
+                } else {
+                    $('#suggestions').hide();
+                }
+            });
+
+            // Handle suggestion selection
+            $('#suggestions').on('click', 'li', function() {
+                $('#compound').val($(this).text());
+                $('#suggestions').hide();
+            });
+
+            // Form submission
+            $('#calculate-form').on('submit', function(e) {
                 e.preventDefault();
+                
+                const mode = calculationMode.val();
+                const formData = {
+                    compound: $('#compound').val(),
+                    calculation_mode: mode
+                };
 
-                const compound = $("#value1").val();
-                const concentration = $("#value2").val();
-                const volume = $("#value3").val();
+                switch(mode) {
+                    case 'concentration':
+                        formData.concentration = $('#concentration').val();
+                        break;
+                    case 'moles-volume':
+                        formData.moles = $('#moles').val();
+                        formData.volume = $('#volume').val();
+                        break;
+                    case 'mass-volume':
+                        formData.mass = $('#mass').val();
+                        formData.volume = $('#volume').val();
+                        break;
+                }
 
                 $.ajax({
-                    url: "/calculate",
-                    type: "POST",
-                    contentType: "application/json",
-                    data: JSON.stringify({
-                        compound,
-                        concentration,
-                        volume,
-                    }),
-                    success: function(response) {
-                        $("#result").html(
-                            `<p><strong>pH:</strong> ${response.pH}</p>
-                             <p><strong>pOH:</strong> ${response.pOH}</p>`
-                        );
+                    url: '/calculate',
+                    method: 'POST',
+                    data: formData,
+                    success: function(data) {
+                        if (data.concentration) {
+                            $('#concentration-result').text(`Concentration: ${data.concentration} M`);
+                        }
+                        if (data.pH) {
+                            $('#pH').text(`pH: ${data.pH}`);
+                            $('#pOH').text(`pOH: ${data.pOH}`);
+                        }
+                        $('#error-message').text('');
                     },
                     error: function(xhr) {
-                        const error = xhr.responseJSON.error || "An error occurred";
-                        $("#result").html(`<p style="color: red;">${error}</p>`);
-                    },
+                        const error = xhr.responseJSON?.error || 'Error calculating. Please try again.';
+                        $('#error-message').text(error);
+                        $('#concentration-result').text('');
+                        $('#pH').text('');
+                        $('#pOH').text('');
+                    }
                 });
             });
         });
     </script>
 </body>
-
 </html>
