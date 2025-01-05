@@ -44,6 +44,54 @@ def calculate():
         if not compound_data:
             return jsonify({"error": "Compound not found"}), 400
 
+        # Handle H+ concentration mode
+        if calculation_mode == "h-concentration":
+            h_conc = float(request.form.get("h_concentration", 0))
+            if h_conc <= 0:
+                return jsonify({"error": "H+ concentration must be greater than 0"}), 400
+            pH = -math.log10(h_conc)
+            pOH = 14 - pH
+            return jsonify({
+                "concentration": h_conc,
+                "pH": round(pH, 5),
+                "pOH": round(pOH, 5)
+            })
+
+        # Handle OH- concentration mode
+        elif calculation_mode == "oh-concentration":
+            oh_conc = float(request.form.get("oh_concentration", 0))
+            if oh_conc <= 0:
+                return jsonify({"error": "OH- concentration must be greater than 0"}), 400
+            pOH = -math.log10(oh_conc)
+            pH = 14 - pOH
+            return jsonify({
+                "concentration": oh_conc,
+                "pH": round(pH, 5),
+                "pOH": round(pOH, 5)
+            })
+
+        # Handle pH input mode
+        elif calculation_mode == "ph-input":
+            pH = float(request.form.get("ph_value", 0))
+            pOH = 14 - pH
+            h_conc = 10 ** (-pH)
+            return jsonify({
+                "concentration": round(h_conc, 10),
+                "pH": round(pH, 5),
+                "pOH": round(pOH, 5)
+            })
+
+        # Handle pOH input mode
+        elif calculation_mode == "poh-input":
+            pOH = float(request.form.get("poh_value", 0))
+            pH = 14 - pOH
+            oh_conc = 10 ** (-pOH)
+            return jsonify({
+                "concentration": round(oh_conc, 10),
+                "pH": round(pH, 5),
+                "pOH": round(pOH, 5)
+            })
+
         # Calculate concentration
         if calculation_mode == "concentration":
             concentration = float(request.form.get("concentration", 0))
@@ -78,19 +126,20 @@ def calculate():
 
         # Calculate pH and pOH
         if compound_category == "strong_acids":
-            # For strong acids, [H+] = concentration
             pH = -math.log10(concentration)
+            if concentration == 1:
+                pH = 0
             pOH = 14 - pH
+            
 
         elif compound_category == "strong_bases":
-            # For strong bases, [OH-] = concentration
             pOH = -math.log10(concentration)
+            if concentration == 1:
+                pOH = 0
             pH = 14 - pOH
 
         elif compound_category == "weak_acids":
-            # For weak acids, Ka = [H+][A-]/[HA]
             Ka = compound_data["K"]
-            # Using quadratic equation: [H+]² + Ka[H+] - KaC = 0
             a = 1
             b = Ka
             c = -Ka * concentration
@@ -99,9 +148,7 @@ def calculate():
             pOH = 14 - pH
 
         elif compound_category == "weak_bases":
-            # For weak bases, Kb = [OH-][BH+]/[B]
             Kb = compound_data["K"]
-            # Using quadratic equation: [OH-]² + Kb[OH-] - KbC = 0
             a = 1
             b = Kb
             c = -Kb * concentration
@@ -110,7 +157,6 @@ def calculate():
             pH = 14 - pOH
 
         elif compound_category == "polyprotic_acids":
-            # For polyprotic acids, consider multiple dissociation steps
             K_values = compound_data["K"]
             H_plus_total = 0
             remaining_conc = concentration
@@ -118,7 +164,6 @@ def calculate():
             for key in sorted(K_values.keys()):
                 if key.startswith(('Ka', 'step_')):
                     Ka = K_values[key]
-                    # Calculate H+ for this step
                     H_plus = (-Ka + math.sqrt(Ka**2 + 4*Ka*remaining_conc)) / 2
                     H_plus_total += H_plus
                     remaining_conc -= H_plus
@@ -127,7 +172,6 @@ def calculate():
             pOH = 14 - pH
 
         elif compound_category == "polyprotic_bases":
-            # For polyprotic bases, consider multiple dissociation steps
             K_values = compound_data["K"]
             OH_minus_total = 0
             remaining_conc = concentration
@@ -135,7 +179,6 @@ def calculate():
             for key in sorted(K_values.keys()):
                 if key.startswith('Kb'):
                     Kb = K_values[key]
-                    # Calculate OH- for this step
                     OH_minus = (-Kb + math.sqrt(Kb**2 + 4*Kb*remaining_conc)) / 2
                     OH_minus_total += OH_minus
                     remaining_conc -= OH_minus
@@ -144,9 +187,9 @@ def calculate():
             pH = 14 - pOH
 
         return jsonify({
-            "concentration": round(concentration, 4),
-            "pH": round(pH, 2),
-            "pOH": round(pOH, 2)
+            "concentration": round(concentration, 5),
+            "pH": round(pH, 5),
+            "pOH": round(pOH, 5)
         })
 
     except ValueError as e:
