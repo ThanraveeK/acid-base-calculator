@@ -34,7 +34,17 @@
         "hypophosphorous acid": { "K": 1.4e-4, "Mw": 66.00 },
         "malic acid": { "K": 1.0e-4, "Mw": 134.09 },
         "acrylic acid": { "K": 3.5e-5, "Mw": 72.06 },
-        "glutaric acid": { "K": 3.8e-5, "Mw": 118.09 }
+        "glutaric acid": { "K": 3.8e-5, "Mw": 118.09 },
+        "nitrous acid": { "K": 5.62e-4, "Mw": 47.014 },
+        "hydrofluoric acid": { "K": 6.6e-4, "Mw": 20.006 },
+        "hydrosulfuric acid": { "K": 8.91e-8, "Mw": 34.081 },
+        "phosphorous acid": { "K": 1.6e-2, "Mw": 82.000 },
+        "dihydrogen phosphite ion": { "K": 6.3e-7, "Mw": 81.980 },
+        "dihydrogen phosphate ion": { "K": 6.3e-8, "Mw": 97.990 },
+        "hydrogen sulfite ion": { "K": 5.6e-8, "Mw": 81.070 },
+        "hypochlorous acid": { "K": 3.1e-8, "Mw": 52.460 },
+        "hydrogen carbonate ion": { "K": 5.0e-11, "Mw": 61.020 },
+        "hydrogen sulfide ion": { "K": 1.3e-13, "Mw": 33.060 }
     },
     "polyprotic_acids": {
         "phosphoric acid": {
@@ -114,7 +124,10 @@
         "arginine": { "K": 1.2e-12, "Mw": 174.20 },
         "hydroxylamine": { "K": 1.0e-6, "Mw": 33.03 },
         "glycine": { "K": 9.6e-3, "Mw": 75.07 },
-        "sulfate ion": { "K": 8.33e-13, "Mw": 96.06 }
+        "sulfate ion": { "K": 8.33e-13, "Mw": 96.06 },
+        "ammonium ion": { "K": 6.0e-10, "Mw": 18.040 },
+        "hydrogen phosphate ion": { "K": 4.0e-13, "Mw": 94.970 },
+        "hydrogen sulfate ion": { "K": 1.2e-2, "Mw": 97.090 }
     },
     "polyprotic_bases": {
         "phosphate ion": {
