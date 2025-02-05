@@ -213,7 +213,7 @@
                 <div class="sup-container">
                     <div class="input-group">
                         <label for="compound">Compound Name</label>
-                        <input type="text" id="compound" name="compound" autocomplete="off" required>
+                        <input type="text" id="compound" name="compound" autocomplete="off">
                         <ul id="suggestions"></ul>
                     </div>
 
@@ -232,42 +232,42 @@
 
                     <div class="input-group" id="concentration-group">
                         <label for="concentration">Concentration (M)</label>
-                        <input type="number" id="concentration" name="concentration" step="0.0001" required>
+                        <input type="number" id="concentration" name="concentration" step="any" >
                     </div>
 
                     <div class="input-group" id="moles-group" style="display: none;">
                         <label for="moles">Moles (mol)</label>
-                        <input type="number" id="moles" name="moles" step="0.0001">
+                        <input type="number" id="moles" name="moles" step="any">
                     </div>
 
                     <div class="input-group" id="mass-group" style="display: none;">
                         <label for="mass">Mass (g)</label>
-                        <input type="number" id="mass" name="mass" step="0.0001">
+                        <input type="number" id="mass" name="mass" step="any">
                     </div>
 
                     <div class="input-group" id="volume-group" style="display: none;">
                         <label for="volume">Volume (L)</label>
-                        <input type="number" id="volume" name="volume" step="0.0001">
+                        <input type="number" id="volume" name="volume" step="any">
                     </div>
 
                     <div class="input-group" id="h-concentration-group" style="display: none;">
                         <label for="h_concentration">H+ Concentration (M)</label>
-                        <input type="number" id="h_concentration" name="h_concentration" step="0.0001">
+                        <input type="number" id="h_concentration" name="any" step="0.0001">
                     </div>
 
                     <div class="input-group" id="oh-concentration-group" style="display: none;">
                         <label for="oh_concentration">OH- Concentration (M)</label>
-                        <input type="number" id="oh_concentration" name="oh_concentration" step="0.0001">
+                        <input type="number" id="oh_concentration" name="any" step="0.0001">
                     </div>
 
                     <div class="input-group" id="ph-input-group" style="display: none;">
                         <label for="ph_value">pH Value</label>
-                        <input type="number" id="ph_value" name="ph_value" step="0.001">
+                        <input type="number" id="ph_value" name="ph_value" step="any">
                     </div>
 
                     <div class="input-group" id="poh-input-group" style="display: none;">
                         <label for="poh_value">pOH Value</label>
-                        <input type="number" id="poh_value" name="poh_value" step="0.001">
+                        <input type="number" id="poh_value" name="poh_value" step="any">
                     </div>
 
                     <button type="submit">Calculate</button>
@@ -415,6 +415,9 @@
                         $('#concentration-result').text('');
                         $('#pH').text('');
                         $('#pOH').text('');
+                        
+                        // Log the error for debugging
+                        console.error('Error response:', xhr.responseJSON);
                     }
                 });
             });
