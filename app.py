@@ -164,7 +164,7 @@ def calculate():
             for key in sorted(K_values.keys()):
                 if key.startswith(('Ka', 'step_')):
                     Ka = K_values[key]
-                    H_plus = (-Ka + math.sqrt(Ka**2 + 4*Ka*remaining_conc)) / 2
+                    H_plus = (-Ka + math.sqrt(Ka*remaining_conc)) 
                     H_plus_total += H_plus
                     remaining_conc -= H_plus
             
@@ -179,7 +179,7 @@ def calculate():
             for key in sorted(K_values.keys()):
                 if key.startswith('Kb'):
                     Kb = K_values[key]
-                    OH_minus = (-Kb + math.sqrt(Kb**2 + 4*Kb*remaining_conc)) / 2
+                    OH_minus = (-Kb + math.sqrt(Kb * remaining_conc)) 
                     OH_minus_total += OH_minus
                     remaining_conc -= OH_minus
             
